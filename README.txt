@@ -1,0 +1,102 @@
+=== Reorder Entry Images ===
+Contributors: Vayu
+Tags: attachments, images, reorder, sort, entry, post, custom post types, page, drag & drop
+Requires at least: 3.4
+Tested up to: 4.7.2
+Stable tag: 1.0.8
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Get all the attachments (images only) that belong to a post/page/post-type and display them in a list. This list can be reordered by drag and drop.
+
+== Description ==
+
+This plugin will help you manually reorder or sort the images attached to your post, custom post type or page.  Once installed and activated you can choose which post type or page you want this functionality on.  All the images attached to that specific post or page will then be listed on the post-edit page in the admin.  You will then be able to drag & drop the images in the order you want them to be listed.
+
+This will only affect those images uploaded to the specific post or page.
+
+Insert images into post/page with this shortcode: `[list_attached_images]`
+Her are some parameters
+
+* imagesize: ie. thumbnail, medium, large
+* numberimages: ie. -1, 0, 5
+* imagelink: link to the image file - false/true
+* order: ie. desc, asc
+* listclass: use your own class
+
+Example:
+`[list_attached_images imagesize="large" numberimages="3" imagelink="true" order="asc" listclass="my-images"]`
+
+Here is the php code that will help you display the images in your theme:
+
+`$thumb_id = get_post_thumbnail_id( get_the_ID() );
+$args = array(
+	'post_type' => 'attachment',
+	'post_mime_type'  => 'image/jpeg',
+	'orderby' => 'menu_order',
+	'numberposts' => -1,
+	'order' => 'ASC',
+	'post_parent' => get_the_ID(),
+	'exclude' => $thumb_id // Exclude featured thumbnail
+);
+$attachments = get_posts($args);
+if ( $attachments ) :
+	foreach ( $attachments as $attachment ) :
+		echo wp_get_attachment_image( $attachment->ID, 'full' );
+	endforeach;
+endif;`
+
+
+== Website ==
+http://vayu.dk/reorder-entry-images/
+
+== Installation ==
+
+1. Upload `reorder-entry-images` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to Settings->Reorder images and choose which post type or page to use this.
+
+== Frequently Asked Questions ==
+
+= When I change the image order, nothing happens? =
+
+Please remember to save the changes by pressing the Update button.
+
+== Screenshots ==
+
+1. Drag & drop your images in the order you choose.
+2. Settings page - set which post type or page to use this.
+
+== Changelog ==
+
+= 1.0.8 =
+* Added Italian translation, thanks to W3B - Web Agency - w3b.it.
+
+= 1.0.7 =
+* Updated for WordPress 4.7.2
+* Fix: Delete function on each image row was not working.
+
+= 1.0.6 =
+* Updated for WordPress 4.4.3
+* Fetaure: Added delete function on each image row.
+
+= 1.0.5 =
+* Updated for WordPress 4.0.
+
+= 1.0.4 =
+* Added option to include feature image in order list.
+* Added support for png and gif images.
+* Tested in WordPress 3.9.2
+
+= 1.0.3 =
+* Updated UI for WordPress 3.8.
+
+= 1.0.2 =
+* Added shortcode, to add images to your post/page.
+* Updated settings page with som information about the plugin and author.
+
+= 1.0.1 =
+* Fixed minor bug.
+
+= 1.0 =
+* Launch first version of plugin.
